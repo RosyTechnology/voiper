@@ -23,6 +23,7 @@ import os
 import string
 import socket
 import time
+import imp
 
 # Props to Pedram Amini and Aaron Portnoy for creating such a great framework
 sys.path.append(''.join([os.getcwd(), '/sulley']))
@@ -97,7 +98,7 @@ class AbstractFuzzer:
         # the user to specify string length I have had to move that string generation
         # to another method, call it manually and then import the protocol mapping
         primitives.gen_strings(max_len)
-        from requests import sip
+        sip = imp.load_source("sip", "sulley/requests/sip.py")
 
         self.sess = sessions.session(session_filename=self.audit_folder + \
         '/sulley.session', skip=self.skip, proto=self.proto, audit_folder=self.audit_folder, \
